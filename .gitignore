@@ -1,0 +1,9 @@
+.idea
+staticfiles/*
+__pycache__
+.local_media
+.DS_Store
+
+!staticfiles/.keep
+
+.data

@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+django-filter = "*"
+djangorestframework = "*"
+dj_database_url = "*"
+drf-spectacular = "*"
+gunicorn = "*"
+ipython = "*"
+psycopg2-binary = "*"
+
+[dev-packages]
+black = {version = "*", extras = ["d"]}
+isort = "*"
+pytest-factoryboy = "*"
+pytest = "*"
+pytest-django = "*"
+pytest-mock = "*"
+
+[requires]
+python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true
