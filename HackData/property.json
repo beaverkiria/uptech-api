@@ -1,0 +1,127 @@
+[
+  {
+    "ID": 276,
+    "CODE": "ALSO_BUY",
+    "NAME": "С этим товаром также покупают"
+  },
+  {
+    "ID": 429,
+    "CODE": "ANALOGS",
+    "NAME": "Аналоги"
+  },
+  {
+    "ID": 326,
+    "CODE": "BRAND_ID",
+    "NAME": "Бренд"
+  },
+  {
+    "ID": 574,
+    "CODE": "BUY_COUNT",
+    "NAME": "Кол-во покупок"
+  },
+  {
+    "ID": 265,
+    "CODE": "COUNTRY",
+    "NAME": "Страна"
+  },
+  {
+    "ID": 284,
+    "CODE": "COURSE_QUANTITY",
+    "NAME": "Количество на курс лечения"
+  },
+  {
+    "ID": 541,
+    "CODE": "DOSAGE",
+    "NAME": "Дозировка"
+  },
+  {
+    "ID": 542,
+    "CODE": "DRUG_FORM",
+    "NAME": "Лекарственная форма"
+  },
+  {
+    "ID": 343,
+    "CODE": "FEATURES",
+    "NAME": "Характеристики"
+  },
+  {
+    "ID": 428,
+    "CODE": "FORM",
+    "NAME": "Форма выпуска"
+  },
+  {
+    "ID": 274,
+    "CODE": "FORM_NAME",
+    "NAME": "Название формы"
+  },
+  {
+    "ID": 263,
+    "CODE": "IS_RECIPE",
+    "NAME": "По рецепту"
+  },
+  {
+    "ID": 264,
+    "CODE": "MANUFACTURER",
+    "NAME": "Производитель"
+  },
+  {
+    "ID": 595,
+    "CODE": "MANUFACTURER",
+    "NAME": "Производитель"
+  },
+  {
+    "ID": 344,
+    "CODE": "MANUFACTURER_ID",
+    "NAME": "Производитель 1С"
+  },
+  {
+    "ID": 483,
+    "CODE": "NEED_RECIPE",
+    "NAME": "Необходим рецепт"
+  },
+  {
+    "ID": 536,
+    "CODE": "OFFER_TYPE",
+    "NAME": "Тип товара"
+  },
+  {
+    "ID": 540,
+    "CODE": "PACKING",
+    "NAME": "Количество в упаковке"
+  },
+  {
+    "ID": 356,
+    "CODE": "PHARMACOLOGICAL_SECTION",
+    "NAME": "Фармакологическая группа"
+  },
+  {
+    "ID": 567,
+    "CODE": "SPECIAL_s1",
+    "NAME": "Акции eapteka.ru"
+  },
+  {
+    "ID": 298,
+    "CODE": "TYPE",
+    "NAME": "Тип отзыва"
+  },
+  {
+    "ID": 325,
+    "CODE": "TYPE",
+    "NAME": "Тип акции"
+  },
+  {
+    "ID": 332,
+    "CODE": "TYPE",
+    "NAME": "Тип номенклатуры"
+  },
+  {
+    "ID": 507,
+    "CODE": "TYPE",
+    "NAME": "Тип отзыва"
+  },
+  {
+    "ID": 283,
+    "CODE": "VENDOR_CODE",
+    "NAME": "Артикул"
+  }
+]

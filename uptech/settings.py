@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "rest_framework",
     "uptech",
+    "uptech.product",
 ]
 
 REST_FRAMEWORK = {
