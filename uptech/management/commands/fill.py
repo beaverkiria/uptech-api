@@ -11,6 +11,7 @@ from uptech.product.models import Product
 class Command(BaseCommand):
 
     PROPERTY_NAME_OVERRIDES = {}
+    PRODUCTS_LIMIT = 5000
 
     def add_arguments(self, parser):
         parser.add_argument("--products", action="store_true", help="Fill product database")
@@ -55,6 +56,9 @@ class Command(BaseCommand):
                     setattr(products_to_update[product_id], field_name, field_value)
             else:
                 products_to_create.append(Product(**data))
+
+        if len(products_to_create) + len(products_to_update) > self.PRODUCTS_LIMIT:
+            products_to_create = products_to_create[: self.PRODUCTS_LIMIT - len(products_to_update)]
 
         print(f"Number of products to create: {len(products_to_create)}")
         print(f"Sber product ids to be created: {[p.sber_product_id for p in products_to_create]}")
