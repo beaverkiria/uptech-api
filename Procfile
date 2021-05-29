@@ -1,1 +1,1 @@
-web: gunicorn senga.wsgi
+web: gunicorn uptech.wsgi
