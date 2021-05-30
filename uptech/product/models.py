@@ -7,9 +7,7 @@ class Product(models.Model):
     class Meta:
         db_table = "product"
         constraints = [
-            models.UniqueConstraint(
-                fields=["sber_product_id"], name="unique_sber_product_id"
-            ),
+            models.UniqueConstraint(fields=["sber_product_id"], name="unique_sber_product_id"),
         ]
         indexes = [
             GinIndex(

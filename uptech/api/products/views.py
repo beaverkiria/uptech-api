@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 
 from contrib.drf.viewsets import BaseViewSet
-from uptech.api.products.serializers import ProductSerializer
+from uptech.api.products.serializers import ProductSerializer, ProductInfoSerializer
 from uptech.product.models import Product
 
 
@@ -26,6 +26,7 @@ class ProductsViewSet(BaseViewSet):
 
     serializer_class_map = {
         "search": ProductSerializer,
+        "info": ProductInfoSerializer,
     }
 
     ordering = "id"
@@ -43,3 +44,7 @@ class ProductsViewSet(BaseViewSet):
     )
     def search(self, request):
         return self._list()
+
+    @action(["get"], detail=True, permission_classes=[AllowAny])
+    def info(self, request, **kwargs):
+        return self._retrieve()

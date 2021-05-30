@@ -145,6 +145,29 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /api/v1/products/{id}/info/:
+    get:
+      operationId: v1_products_info_retrieve
+      description: ''
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - products
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductInfo'
+          description: ''
   /api/v1/products/search/:
     get:
       operationId: v1_products_search_list
@@ -226,17 +249,84 @@ components:
         packing:
           type: string
           readOnly: true
+        price:
+          type: string
+          format: decimal
+          pattern: ^\d{0,6}(\.\d{0,2})?$
+          readOnly: true
+        detail_page_url:
+          type: string
+          readOnly: true
+        analogue_ids:
+          type: array
+          items:
+            type: integer
+            maximum: 9223372036854775807
+            minimum: -9223372036854775808
+            format: int64
+          readOnly: true
+        medsis_id:
+          type: integer
+          readOnly: true
+        effectiveness:
+          type: integer
+          readOnly: true
+        safety:
+          type: integer
+          readOnly: true
+        convenience:
+          type: integer
+          readOnly: true
+        contraindications:
+          type: integer
+          readOnly: true
+        side_effects:
+          type: integer
+          readOnly: true
+        tolerance:
+          type: integer
+          readOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^\d{0,2}(\.\d{0,1})?$
+          readOnly: true
       required:
+      - analogue_ids
+      - contraindications
+      - convenience
       - country
+      - detail_page_url
       - dosage
       - drug_form
+      - effectiveness
       - form_name
       - id
       - is_recipe
       - manufacturer
+      - medsis_id
       - name
       - packing
+      - price
+      - safety
       - sber_product_id
+      - score
+      - side_effects
+      - tolerance
+    ProductInfo:
+      type: object
+      properties:
+        cheapest:
+          allOf:
+          - $ref: '#/components/schemas/Product'
+          readOnly: true
+        effective:
+          allOf:
+          - $ref: '#/components/schemas/Product'
+          readOnly: true
+      required:
+      - cheapest
+      - effective
   securitySchemes:
     cookieAuth:
       type: apiKey
