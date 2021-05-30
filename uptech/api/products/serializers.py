@@ -10,7 +10,9 @@ from uptech.product.models import Product
 
 class ProductListSerializer(ListSerializer):
     def to_representation(self, data: List[Product]):
-        analogues = Product.objects.in_bulk([a_id for item in data for a_id in item.analogue_ids])
+        analogues = Product.objects.in_bulk(
+            [a_id for item in data for a_id in item.analogue_ids]
+        )
         for item in data:
             item._analogues = [analogues[a_id] for a_id in item.analogue_ids]
 
@@ -22,6 +24,8 @@ class InnerProductSerializer(ModelSerializer):
     is_effective = serializers.BooleanField(read_only=True)
     is_cheapest = serializers.BooleanField(read_only=True)
     is_trustworthy = serializers.BooleanField(read_only=True)
+
+    image_url = serializers.URLField(read_only=True)
 
     class Meta:
         model = Product
@@ -50,6 +54,7 @@ class InnerProductSerializer(ModelSerializer):
             "is_effective",
             "is_cheapest",
             "is_trustworthy",
+            "image_url",
         ]
 
 
@@ -60,7 +65,9 @@ class AnalogueProductSerializer(InnerProductSerializer):
 
 
 class ProductSerializer(InnerProductSerializer):
-    analogues = AnalogueProductSerializer(read_only=True, many=True, source="_analogues")
+    analogues = AnalogueProductSerializer(
+        read_only=True, many=True, source="_analogues"
+    )
 
     class Meta(InnerProductSerializer.Meta):
         list_serializer_class = ProductListSerializer
@@ -79,7 +86,9 @@ class ProductSerializer(InnerProductSerializer):
 
             a._is_effective = False
             if a.effectiveness:
-                a._is_effective = not obj.effectiveness or a.effectiveness > obj.effectiveness
+                a._is_effective = (
+                    not obj.effectiveness or a.effectiveness > obj.effectiveness
+                )
 
         return super().to_representation(obj)
 
@@ -89,7 +98,11 @@ class ProductInfoSerializer(Serializer):
     effective = ProductSerializer(read_only=True)
 
     def to_representation(self, obj: Product) -> dict:
-        analogues = [*Product.objects.filter(pk__in=obj.analogue_ids, medsis_id__isnull=False, price__isnull=False)]
+        analogues = [
+            *Product.objects.filter(
+                pk__in=obj.analogue_ids, medsis_id__isnull=False, price__isnull=False
+            )
+        ]
         if not analogues:
             return {"cheapest": None, "effective": None}
 
@@ -101,7 +114,9 @@ class ProductInfoSerializer(Serializer):
         else:
             cheapest = sorted_by_price[0] if sorted_by_price else None
 
-        sorted_by_effectiveness = sorted(analogues, key=lambda item: -item.effectiveness)
+        sorted_by_effectiveness = sorted(
+            analogues, key=lambda item: -item.effectiveness
+        )
         for p in sorted_by_effectiveness:
             if p.score >= Decimal("6") and p.effectiveness >= 80:
                 effective = p

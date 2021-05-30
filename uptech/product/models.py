@@ -1,7 +1,7 @@
 import bisect
 from decimal import Decimal
 from math import ceil
-from typing import Set
+from typing import Set, Optional
 
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.indexes import GinIndex
@@ -12,7 +12,9 @@ class Product(models.Model):
     class Meta:
         db_table = "product"
         constraints = [
-            models.UniqueConstraint(fields=["sber_product_id"], name="unique_sber_product_id"),
+            models.UniqueConstraint(
+                fields=["sber_product_id"], name="unique_sber_product_id"
+            ),
         ]
         indexes = [
             GinIndex(
@@ -60,7 +62,12 @@ class Product(models.Model):
 
     @property
     def is_effective(self) -> bool:
-        return self.score and self.score > Decimal("6") and self.effectiveness and self.effectiveness >= 80
+        return (
+            self.score
+            and self.score > Decimal("6")
+            and self.effectiveness
+            and self.effectiveness >= 80
+        )
 
     @property
     def is_cheapest(self) -> bool:
@@ -82,7 +89,9 @@ class Product(models.Model):
     def trustworthy_rate(self) -> float:
         if not self.score:
             return 0.0
-        return (self.safety + (100 - self.side_effects) + (100 - self.contraindications)) / 3.0
+        return (
+            self.safety + (100 - self.side_effects) + (100 - self.contraindications)
+        ) / 3.0
 
     @property
     def is_trustworthy(self) -> bool:
@@ -93,4 +102,16 @@ class Product(models.Model):
             return set()
         self._preload_analogues()
         analogues = [a for a in self._analogues if a.score and a.price]
-        return {a.pk for a in analogues if (self.price - a.price) / self.price > (a.score - self.score) / a.score}
+        return {
+            a.pk
+            for a in analogues
+            if (self.price - a.price) / self.price > (a.score - self.score) / a.score
+        }
+
+    @property
+    def image_url(self) -> Optional[str]:
+        if not self.detail_page_url:
+            return None
+
+        good_id = self.detail_page_url.strip("/").split("/")[-1][2:]
+        return f"https://cdn.eapteka.ru/upload/offer_photo/{good_id[:3]}/{good_id[3:]}/resized/450_450_1.jpeg"

@@ -310,6 +310,10 @@ components:
         is_trustworthy:
           type: boolean
           readOnly: true
+        image_url:
+          type: string
+          format: uri
+          readOnly: true
       required:
       - analogue_ids
       - contraindications
@@ -321,6 +325,7 @@ components:
       - effectiveness
       - form_name
       - id
+      - image_url
       - is_cheapest
       - is_effective
       - is_recipe
@@ -432,6 +437,10 @@ components:
         is_trustworthy:
           type: boolean
           readOnly: true
+        image_url:
+          type: string
+          format: uri
+          readOnly: true
         analogues:
           type: array
           items:
@@ -449,6 +458,7 @@ components:
       - effectiveness
       - form_name
       - id
+      - image_url
       - is_cheapest
       - is_effective
       - is_recipe
