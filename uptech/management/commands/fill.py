@@ -7,6 +7,7 @@ from django.core.management import BaseCommand
 from django.conf import settings
 
 from uptech.product.models import Product
+from uptech.utils import chunks
 
 
 class Command(BaseCommand):
@@ -111,8 +112,12 @@ class Command(BaseCommand):
             p.detail_page_url = data_item["DETAIL_PAGE_URL"]
             products_to_update.append(p)
 
-        print(f"Number of products to update: {len(products_to_update)}")
-        Product.objects.bulk_update(products_to_update, ["price", "detail_page_url"])
+        print(f"Number of products to update basket: {len(products_to_update)}")
+        cnt = 0
+        for p_chunk in chunks(products_to_update, 500):
+            Product.objects.bulk_update(p_chunk, ["price", "detail_page_url"])
+            cnt += p_chunk
+            print(cnt)
 
     def fill_medsis(self):
         with open(
@@ -159,21 +164,25 @@ class Command(BaseCommand):
 
             products_to_update.append(p)
 
-        print(f"Number of products to update: {len(products_to_update)}")
-        Product.objects.bulk_update(
-            products_to_update,
-            [
-                "medsis_id",
-                "effectiveness",
-                "safety",
-                "convenience",
-                "contraindications",
-                "side_effects",
-                "tolerance",
-                "score",
-                "analogue_ids",
-            ],
-        )
+        print(f"Number of products to update medsis: {len(products_to_update)}")
+        cnt = 0
+        for p_chunk in chunks(products_to_update, 500):
+            Product.objects.bulk_update(
+                p_chunk,
+                [
+                    "medsis_id",
+                    "effectiveness",
+                    "safety",
+                    "convenience",
+                    "contraindications",
+                    "side_effects",
+                    "tolerance",
+                    "score",
+                    "analogue_ids",
+                ],
+            )
+            cnt += p_chunk
+            print(cnt)
 
     def handle(self, *args, **options):
         if options["products"]:
