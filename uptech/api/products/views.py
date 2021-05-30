@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 
 from contrib.drf.viewsets import BaseViewSet
-from uptech.api.products.serializers import ProductSerializer, ProductInfoSerializer
+from uptech.api.products.serializers import ProductInfoSerializer, ProductSerializer
 from uptech.product.models import Product
 
 

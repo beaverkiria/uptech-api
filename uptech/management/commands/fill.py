@@ -2,9 +2,8 @@ import json
 import os
 from collections import defaultdict
 
-from django.core.management import BaseCommand
-
 from django.conf import settings
+from django.core.management import BaseCommand
 
 from uptech.product.models import Product
 from uptech.utils import chunks

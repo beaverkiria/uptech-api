@@ -1,7 +1,7 @@
 import bisect
 from decimal import Decimal
 from math import ceil
-from typing import Set, Optional
+from typing import Optional, Set
 
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.indexes import GinIndex
