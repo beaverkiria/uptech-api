@@ -23,10 +23,12 @@ class ProductFilterSet(filters.FilterSet):
 @extend_schema(tags=["products"])
 class ProductsViewSet(BaseViewSet):
     filterset_class = None
+    permission_classes = [AllowAny]
 
     serializer_class_map = {
         "search": ProductSerializer,
         "info": ProductInfoSerializer,
+        "retrieve": ProductSerializer,
     }
 
     ordering = "id"
@@ -47,4 +49,7 @@ class ProductsViewSet(BaseViewSet):
 
     @action(["get"], detail=True, permission_classes=[AllowAny])
     def info(self, request, **kwargs):
+        return self._retrieve()
+
+    def retrieve(self, request, **kwargs):
         return self._retrieve()
