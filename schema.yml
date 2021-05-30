@@ -203,6 +203,115 @@ paths:
           description: ''
 components:
   schemas:
+    AnalogueProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sber_product_id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        country:
+          type: string
+          readOnly: true
+        dosage:
+          type: string
+          readOnly: true
+        drug_form:
+          type: string
+          readOnly: true
+        form_name:
+          type: string
+          readOnly: true
+        is_recipe:
+          type: boolean
+          readOnly: true
+        manufacturer:
+          type: string
+          readOnly: true
+        packing:
+          type: string
+          readOnly: true
+        price:
+          type: string
+          format: decimal
+          pattern: ^\d{0,6}(\.\d{0,2})?$
+          readOnly: true
+        detail_page_url:
+          type: string
+          readOnly: true
+        analogue_ids:
+          type: array
+          items:
+            type: integer
+            maximum: 9223372036854775807
+            minimum: -9223372036854775808
+            format: int64
+          readOnly: true
+        medsis_id:
+          type: integer
+          readOnly: true
+        effectiveness:
+          type: integer
+          readOnly: true
+        safety:
+          type: integer
+          readOnly: true
+        convenience:
+          type: integer
+          readOnly: true
+        contraindications:
+          type: integer
+          readOnly: true
+        side_effects:
+          type: integer
+          readOnly: true
+        tolerance:
+          type: integer
+          readOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^\d{0,2}(\.\d{0,1})?$
+          readOnly: true
+        is_effective:
+          type: boolean
+          readOnly: true
+        is_cheapest:
+          type: boolean
+          readOnly: true
+        is_trustworthy:
+          type: boolean
+          readOnly: true
+      required:
+      - analogue_ids
+      - contraindications
+      - convenience
+      - country
+      - detail_page_url
+      - dosage
+      - drug_form
+      - effectiveness
+      - form_name
+      - id
+      - is_cheapest
+      - is_effective
+      - is_recipe
+      - is_trustworthy
+      - manufacturer
+      - medsis_id
+      - name
+      - packing
+      - price
+      - safety
+      - sber_product_id
+      - score
+      - side_effects
+      - tolerance
     PaginatedProductList:
       type: object
       properties:
@@ -291,8 +400,23 @@ components:
           format: decimal
           pattern: ^\d{0,2}(\.\d{0,1})?$
           readOnly: true
+        is_effective:
+          type: boolean
+          readOnly: true
+        is_cheapest:
+          type: boolean
+          readOnly: true
+        is_trustworthy:
+          type: boolean
+          readOnly: true
+        analogues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalogueProduct'
+          readOnly: true
       required:
       - analogue_ids
+      - analogues
       - contraindications
       - convenience
       - country
@@ -302,7 +426,10 @@ components:
       - effectiveness
       - form_name
       - id
+      - is_cheapest
+      - is_effective
       - is_recipe
+      - is_trustworthy
       - manufacturer
       - medsis_id
       - name

@@ -1,3 +1,8 @@
+import bisect
+from decimal import Decimal
+from math import ceil
+from typing import Set
+
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
@@ -41,3 +46,51 @@ class Product(models.Model):
 
     def __str__(self):
         return f"Product(id={self.id}, sber_product_id={self.sber_product_id}, medsis_id={self.medsis_id}, name={self.name})"
+
+    def _preload_analogues(self):
+        if not hasattr(self, "_analogues"):
+            self._analogues = [
+                *Product.objects.filter(
+                    pk__in=self.analogue_ids,
+                    price__isnull=False,
+                    medsis_id__isnull=False,
+                )
+            ]
+        return self._analogues
+
+    @property
+    def is_effective(self) -> bool:
+        return self.score and self.score > Decimal("6") and self.effectiveness and self.effectiveness >= 80
+
+    @property
+    def is_cheapest(self) -> bool:
+        if not self.score or self.score < Decimal(6):
+            return False
+
+        self._preload_analogues()
+        if not self._analogues:
+            return False
+
+        sorted_analogues = sorted([a.price for a in self._analogues if a.price])
+        price_position = bisect.bisect_left(sorted_analogues, self.price)
+        if price_position <= ceil(len(self._analogues) / 10.0 * 3):
+            return True
+
+        return False
+
+    @property
+    def trustworthy_rate(self) -> float:
+        if not self.score:
+            return 0.0
+        return (self.safety + (100 - self.side_effects) + (100 - self.contraindications)) / 3.0
+
+    @property
+    def is_trustworthy(self) -> bool:
+        return self.score and self.score >= Decimal("6") and self.trustworthy_rate >= 80
+
+    def get_cheaper_analogue_ids(self) -> Set[int]:
+        if not self.price or self.score:
+            return set()
+        self._preload_analogues()
+        analogues = [a for a in self._analogues if a.score and a.price]
+        return {a.pk for a in analogues if (self.price - a.price) / self.price > (a.score - self.score) / a.score}
