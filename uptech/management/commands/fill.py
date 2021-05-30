@@ -116,7 +116,7 @@ class Command(BaseCommand):
         cnt = 0
         for p_chunk in chunks(products_to_update, 500):
             Product.objects.bulk_update(p_chunk, ["price", "detail_page_url"])
-            cnt += p_chunk
+            cnt += len(p_chunk)
             print(cnt)
 
     def fill_medsis(self):
@@ -181,7 +181,7 @@ class Command(BaseCommand):
                     "analogue_ids",
                 ],
             )
-            cnt += p_chunk
+            cnt += len(p_chunk)
             print(cnt)
 
     def handle(self, *args, **options):
