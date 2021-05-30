@@ -3,6 +3,7 @@ staticfiles/*
 __pycache__
 .local_media
 .DS_Store
+medsis_dump/*
 
 !staticfiles/.keep
 

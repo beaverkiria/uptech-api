@@ -7,30 +7,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sber_product_id', models.IntegerField()),
-                ('name', models.CharField(max_length=400)),
-                ('country', models.CharField(max_length=50, null=True)),
-                ('dosage', models.CharField(max_length=50, null=True)),
-                ('drug_form', models.CharField(max_length=100, null=True)),
-                ('form_name', models.CharField(max_length=100, null=True)),
-                ('is_recipe', models.BooleanField(default=False)),
-                ('manufacturer', models.CharField(max_length=300, null=True)),
-                ('packing', models.CharField(max_length=100, null=True)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("sber_product_id", models.IntegerField()),
+                ("name", models.CharField(max_length=400)),
+                ("country", models.CharField(max_length=50, null=True)),
+                ("dosage", models.CharField(max_length=50, null=True)),
+                ("drug_form", models.CharField(max_length=100, null=True)),
+                ("form_name", models.CharField(max_length=100, null=True)),
+                ("is_recipe", models.BooleanField(default=False)),
+                ("manufacturer", models.CharField(max_length=300, null=True)),
+                ("packing", models.CharField(max_length=100, null=True)),
             ],
             options={
-                'db_table': 'product',
+                "db_table": "product",
             },
         ),
         migrations.AddConstraint(
-            model_name='product',
-            constraint=models.UniqueConstraint(fields=('sber_product_id',), name='unique_sber_product_id'),
+            model_name="product",
+            constraint=models.UniqueConstraint(fields=("sber_product_id",), name="unique_sber_product_id"),
         ),
     ]

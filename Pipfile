@@ -15,11 +15,15 @@ psycopg2-binary = "*"
 
 [dev-packages]
 black = {version = "*", extras = ["d"]}
+beautifulsoup4 = "*"
 isort = "*"
+jupyter = "*"
+grequests = "*"
 pytest-factoryboy = "*"
 pytest = "*"
 pytest-django = "*"
 pytest-mock = "*"
+requests = "*"
 
 [requires]
 python_version = "3.9"
