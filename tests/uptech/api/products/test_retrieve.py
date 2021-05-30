@@ -61,6 +61,7 @@ def test_retrieve(client, url):
         safety=1,
         side_effects=1,
         contraindications=1,
+        detail_page_url="/goods/id228766/",
     )
 
     resp = client.get(url(p.pk), format="json")
@@ -69,6 +70,10 @@ def test_retrieve(client, url):
     assert resp.data["is_cheapest"] is True
     assert resp.data["is_trustworthy"] is False
     assert resp.data["is_effective"] is False
+    assert (
+        resp.data["image_url"]
+        == "https://cdn.eapteka.ru/upload/offer_photo/228/766/resized/450_450_1.jpeg"
+    )
 
     assert resp.data["analogues"][0]["id"] == p1.pk
     assert resp.data["analogues"][0]["is_cheapest"] is False
