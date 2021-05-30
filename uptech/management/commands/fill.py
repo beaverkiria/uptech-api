@@ -12,7 +12,7 @@ from uptech.product.models import Product
 class Command(BaseCommand):
 
     PROPERTY_NAME_OVERRIDES = {}
-    PRODUCTS_LIMIT = 5000
+    PRODUCTS_LIMIT = 100000
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -86,12 +86,8 @@ class Command(BaseCommand):
             ]
 
         print(f"Number of products to create: {len(products_to_create)}")
-        print(
-            f"Sber product ids to be created: {[p.sber_product_id for p in products_to_create]}"
-        )
 
         print(f"Number of products to update: {len(products_to_update)}")
-        print(f"Sber product ids to be updated: {products_to_update.keys()}")
 
         Product.objects.bulk_create(products_to_create)
         Product.objects.bulk_update(
